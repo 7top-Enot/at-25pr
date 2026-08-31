@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Розклад занять · АТ-25пр</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cuprum:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e7eae2;
+  --sheet:#f3f4ef;
+  --grid:#cfd8d2;
+  --rule:#9ba59d;
+  --ink:#1f2429;
+  --ink-2:#5c646b;
+  --ink-3:#868f95;
+  --pencil:#a8291b;
+  --blue:#2b5f7b;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  padding:22px 14px 60px;
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font:400 16px/1.5 "IBM Plex Sans", system-ui, sans-serif;
+  font-variant-numeric:tabular-nums;
+}
+.sheet{
+  max-width:1000px;margin:0 auto;
+  background:var(--sheet);
+  border:1.5px solid var(--ink);
+  box-shadow:0 1px 0 var(--rule), 8px 10px 0 rgba(31,36,41,.06);
+}
+
+/* --- основний напис (title block) --- */
+.block{border-bottom:1.5px solid var(--ink)}
+.block-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;padding:20px 22px 16px}
+h1{
+  font:700 44px/0.92 "Cuprum", sans-serif;
+  letter-spacing:.005em;margin:0;flex:1 1 320px;
+}
+h1 span{display:block;font-size:19px;font-weight:500;color:var(--ink-2);letter-spacing:.06em;margin-top:8px}
+.group{
+  font:700 30px/1 "Cuprum", sans-serif;
+  border:1.5px solid var(--ink);padding:10px 16px 8px;background:var(--paper);
+}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.meta div{padding:9px 22px;border-right:1px solid var(--rule);font-size:14px;color:var(--ink-2)}
+.meta div:last-child{border-right:0}
+.meta b{display:block;font:500 17px/1.3 "IBM Plex Sans",sans-serif;color:var(--ink)}
+
+/* --- рядок стану --- */
+#now{
+  display:flex;gap:12px;align-items:baseline;
+  padding:13px 22px;border-bottom:1.5px solid var(--ink);
+  background:var(--paper);font-size:15px;color:var(--ink-2);
+}
+#now .tick{
+  flex:none;width:9px;height:9px;background:var(--pencil);
+  border-radius:50%;transform:translateY(-1px)
+}
+#now strong{color:var(--ink);font-weight:600}
+
+/* --- дні --- */
+.day{border-bottom:1px solid var(--rule)}
+.day:last-of-type{border-bottom:0}
+.day-head{
+  display:flex;align-items:baseline;gap:12px;
+  padding:16px 22px 8px;
+}
+.day-head h2{
+  font:700 23px/1 "Cuprum",sans-serif;margin:0;letter-spacing:.02em;
+}
+.day-head em{font-style:normal;font-size:13px;color:var(--ink-3)}
+.day.today .day-head h2{color:var(--pencil)}
+.day.today{background:#fbfbf7}
+
+.row{
+  display:grid;
+  grid-template-columns:38px 104px minmax(0,1fr) 168px auto;
+  gap:0 16px;align-items:center;
+  padding:11px 22px;border-top:1px dotted #c3cac3;
+}
+.row.now{background:var(--paper);box-shadow:inset 4px 0 0 var(--pencil)}
+.num{
+  font:700 15px/1 "Cuprum",sans-serif;
+  width:28px;height:28px;display:grid;place-items:center;
+  border:1.2px solid var(--ink);border-radius:50%;
+}
+.row.now .num{border-color:var(--pencil);color:var(--pencil)}
+.time{font-size:14px;color:var(--ink-2);white-space:nowrap}
+.subj{font-weight:500;line-height:1.35}
+.subj small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.teacher{font-size:14px;color:var(--ink-2)}
+.links{display:flex;gap:6px;justify-content:flex-end}
+.links a{
+  font-size:12.5px;text-decoration:none;color:var(--blue);
+  border:1px solid #b9c6cc;padding:4px 10px;background:#fff;
+}
+.links a:hover,.links a:focus-visible{background:var(--blue);color:#fff;border-color:var(--blue)}
+.links a.zoom{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:500}
+.links a.zoom:hover,.links a.zoom:focus-visible{background:var(--ink);border-color:var(--ink)}
+.split{display:grid;gap:8px}
+.split .subj + .subj{padding-top:8px;border-top:1px dotted #c3cac3}
+
+/* --- zoom --- */
+.rooms{padding:20px 22px 24px;border-top:1.5px solid var(--ink)}
+.rooms h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
+.rooms p{margin:0 0 14px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
+.rooms .hint{margin:14px 0 0;color:var(--ink-3);font-size:12.5px}
+.room-list{display:grid;gap:0;border-top:1px solid #d5ddd6}
+.room{display:grid;grid-template-columns:minmax(0,1fr) 180px 96px;gap:14px;align-items:center;
+  padding:10px 0;border-bottom:1px solid #d5ddd6}
+.room .who{font-weight:500;font-size:15px;line-height:1.3}
+.room .who small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.room .code{font-size:13.5px;color:var(--ink-2);user-select:all}
+.room a{justify-self:end;font-size:12.5px;text-decoration:none;color:var(--blue);
+  border:1px solid #b9c6cc;padding:5px 12px;background:#fff}
+.room a:hover,.room a:focus-visible{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* --- дзвінки --- */
+.bells{padding:20px 22px 26px;border-top:1.5px solid var(--ink);background:var(--paper)}
+.bells h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
+.bells p{margin:0 0 16px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
+.bell-list{display:grid;gap:0;max-width:520px}
+.bell{display:flex;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid #d5ddd6}
+.bell:last-child{border-bottom:0}
+.bell .p{font:700 15px/1 "Cuprum",sans-serif;width:74px}
+.bell .t{font-size:15px}
+.bell.break{color:var(--ink-3);font-size:13px;padding:4px 0}
+.bell.break .p{font-weight:500;font-family:"IBM Plex Sans",sans-serif;font-size:13px}
+.bell.off .p,.bell.off .t{color:var(--ink-3)}
+.bell .tag{margin-left:auto;font-size:12px;color:var(--ink-3)}
+
+footer{
+  max-width:1000px;margin:16px auto 0;padding:0 4px;
+  font-size:13px;color:var(--ink-2);
+}
+footer ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+
+@media (max-width:760px){
+  body{padding:12px 8px 40px;background-size:20px 20px}
+  h1{font-size:34px}
+  .meta{grid-template-columns:1fr 1fr}
+  .meta div:nth-child(2){border-right:0}
+  .meta div:nth-child(3){border-top:1px solid var(--rule)}
+  .row{grid-template-columns:30px 1fr;gap:2px 12px;padding:12px 16px}
+  .time{grid-column:2;order:2}
+  .subj{grid-column:2;order:1}
+  .teacher{grid-column:2;order:3}
+  .links{grid-column:2;order:4;justify-content:flex-start;margin-top:8px}
+  .day-head,#now,.bells,.rooms{padding-left:16px;padding-right:16px}
+  .room{grid-template-columns:1fr auto;gap:4px 12px}
+  .room .who{grid-column:1/-1}
+  .room a{grid-column:2}
+  .block-top{padding:16px}
+  .meta div{padding:8px 16px}
+}
+@media print{
+  body{background:#fff;padding:0}
+  .sheet{box-shadow:none}
+  .links{display:none}
+}
+</style>
+</head>
+<body>
+
+<main class="sheet">
+  <div class="block">
+    <div class="block-top">
+      <h1>Розклад занять<span>Дистанційне навчання</span></h1>
+      <div class="group">АТ-25пр</div>
+    </div>
+    <div class="meta">
+      <div>Навчальних днів<b>Понеділок — п’ятниця</b></div>
+      <div>Пари щодня<b>з 1-ї по 4-ту</b></div>
+      <div>Початок і кінець<b>09.15 — 13.55</b></div>
+    </div>
+  </div>
+
+  <div id="now"><span class="tick"></span><span id="now-text">Визначаю поточний час…</span></div>
+
+  <div id="days"></div>
+
+  <section class="rooms">
+    <h2>Zoom-конференції</h2>
+    <p>Одна кімната може обслуговувати кілька дисциплін. Посилання вже містить пароль — код нижче потрібен, якщо заходите за ідентифікатором.</p>
+    <div class="room-list">
+      <div class="room">
+        <div class="who">Автомобілі<small>Бухов А.І.</small></div>
+        <div class="code">212 046 7557 · qFZ3z3</div>
+        <a href="https://us02web.zoom.us/j/2120467557?pwd=RVB6UkRVQkE5NmgyZkpiNy81NnNGUT09" target="_blank" rel="noopener">Відкрити</a>
+      </div>
+      <div class="room">
+        <div class="who">Інженерна та комп’ютерна графіка<small>Стрижкова Л.В.</small></div>
+        <div class="code">893 4258 2373</div>
+        <a href="https://us02web.zoom.us/j/89342582373" target="_blank" rel="noopener">Відкрити</a>
+      </div>
+      <div class="room">
+        <div class="who">Технічна механіка<small>Кузьменко Є.А.</small></div>
+        <div class="code">844 9853 8034</div>
+        <a href="https://us02web.zoom.us/j/84498538034?pwd=60T8noqNgHv1YWSi0y6sbniSKB2myp.1" target="_blank" rel="noopener">Відкрити</a>
+      </div>
+      <div class="room">
+        <div class="who">Взаємозамінність, електротехніка<small>Постільга В.М.</small></div>
+        <div class="code">669 347 6758 · y19XGZ</div>
+        <a href="https://us05web.zoom.us/j/6693476758?pwd=am1hSvb4ITYEt3X85dEfzpPo1LAbuW.1" target="_blank" rel="noopener">Відкрити</a>
+      </div>
+    </div>
+    <p class="hint">Для іноземної мови, основ національного спротиву, фізичного виховання та виховної години посилань на Zoom поки немає — заняття за Google Класом.</p>
+  </section>
+
+  <section class="bells">
+    <h2>Дзвінки</h2>
+    <p>Повний розклад дзвінків закладу. У групи АТ-25пр заняття закінчуються після 4-ї пари.</p>
+    <div class="bell-list" id="bells"></div>
+  </section>
+</main>
+
+<footer>
+  Викладачі
+  <ul>
+    <li>Кузьменко Є.А. — іноземна мова, технічна механіка, виховна година</li>
+    <li>Бухов А.І. — автомобілі</li>
+    <li>Стрижкова Л.В. — інженерна та комп’ютерна графіка</li>
+    <li>Постільга В.М. — взаємозамінність, електротехніка</li>
+    <li>Ошега В.О. — основи національного спротиву</li>
+    <li>Шилов О.О. — фізичне виховання</li>
+  </ul>
+</footer>
+
+<script>
+const CR = "https://classroom.google.com/c/";
+const SS = id => "https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing";
+
+const Z = {
+  auto:  {u:"https://us02web.zoom.us/j/2120467557?pwd=RVB6UkRVQkE5NmgyZkpiNy81NnNGUT09", id:"212 046 7557", pw:"qFZ3z3"},
+  graf:  {u:"https://us02web.zoom.us/j/89342582373", id:"893 4258 2373", pw:"—"},
+  mech:  {u:"https://us02web.zoom.us/j/84498538034?pwd=60T8noqNgHv1YWSi0y6sbniSKB2myp.1", id:"844 9853 8034", pw:"—"},
+  post:  {u:"https://us05web.zoom.us/j/6693476758?pwd=am1hSvb4ITYEt3X85dEfzpPo1LAbuW.1", id:"669 347 6758", pw:"y19XGZ"}
+};
+
+const S = {
+  eng:   {n:"Іноземна мова за професійним спрямуванням", t:"Кузьменко Є.А.", c:CR+"ODc1OTk4MTY0Njc5?cjc=wfoyobee", j:SS("1agQH7HAzRT6BUn6DWDmtPuLvLL5HC0ynV3iVfbFzz58")},
+  auto:  {n:"Автомобілі", t:"Бухов А.І.", c:CR+"ODc2MDg5ODI1MjUx?cjc=uzzgdpuj", j:SS("1bGkNlFx8_Kjl8651DypJtTidAZpVlvug83ryEKJ0Ik8"), z:Z.auto},
+  spr:   {n:"Основи національного спротиву", t:"Ошега В.О.", c:CR+"ODc2MDM4MDIzNDU1?cjc=a6kyjcpk", j:SS("1m8pO_Oy9D76cpOuht81F7twKUVDmO48Wcd4Dtx6DhhI")},
+  eng_gr:{n:"Інженерна графіка", t:"Стрижкова Л.В.", c:CR+"ODc1OTk1MTMzODcy?cjc=ritautfg", j:SS("1dkoUUWlLGif0S73p1CNJZ9b50qTpK3xcHCdW5jl0p6c"), z:Z.graf},
+  comp:  {n:"Комп’ютерна графіка в машинобудівних кресленнях", t:"Стрижкова Л.В.", c:CR+"ODI2MTIyOTc4MzI3?cjc=vds3vinx", j:SS("1MSrhBZe0rWDG5uOEv34s3Q4cLBvdQLV7ZWyWO1yON3s"), z:Z.graf},
+  mech:  {n:"Технічна механіка", t:"Кузьменко Є.А.", c:CR+"ODc1OTk3MTAxOTE2?cjc=2qwi3oi2", j:SS("19ZAY4migSTfQD4DSDVqKMNSzaLKznjM-wEQ1-KM2kak"), z:Z.mech},
+  pe:    {n:"Фізичне виховання", t:"Шилов О.О.", c:CR+"ODc2MTc0ODk4NzAz?cjc=6csffrgp", j:SS("1m6NImE9V5fu_XrtL7IIRegm7v1Z8IyL4_OK1dFgMpWE")},
+  vzaem: {n:"Взаємозамінність", t:"Постільга В.М.", c:CR+"ODc2MjAyNTY0MDgx?cjc=jifasb3k", j:SS("19pWqoLE7oF6fi5R5G3OBY-vK-snkxuJdsczGK6h30cg"), z:Z.post},
+  vyh:   {n:"Виховна година", t:"Кузьменко Є.А.", c:CR+"ODc2MDAyNTAxMDQ4?cjc=bse7skwv"},
+  el:    {n:"Електротехніка", t:"Постільга В.М.", c:CR+"ODc2MjAxODAzMDMy?cjc=iiaz727u", j:SS("1a67_S8JVbSBwkKwoU7nNGeFBIe0hdiTU56VOitsoNTk"), z:Z.post}
+};
+
+const PAIRS = [
+  {no:1, from:"09.15", to:"10.15", s:555, e:615},
+  {no:2, from:"10.25", to:"11.25", s:625, e:685},
+  {no:3, from:"11.45", to:"12.45", s:705, e:765},
+  {no:4, from:"12.55", to:"13.55", s:775, e:835},
+  {no:5, from:"14.15", to:"15.15", s:855, e:915},
+  {no:6, from:"15.25", to:"16.25", s:925, e:985},
+  {no:7, from:"16.35", to:"17.35", s:995, e:1055}
+];
+
+const WEEK = [
+  {d:1, name:"Понеділок", note:"", lessons:{1:[S.eng], 2:[S.auto], 3:[S.spr]}},
+  {d:2, name:"Вівторок", note:"початок з 2-ї пари", lessons:{2:[S.eng_gr], 3:[S.comp], 4:[S.mech]}},
+  {d:3, name:"Середа", note:"", lessons:{1:[S.mech], 2:[S.auto], 3:[S.auto], 4:[S.pe]}},
+  {d:4, name:"Четвер", note:"", lessons:{1:[S.vzaem], 2:[S.vzaem], 3:[S.mech], 4:[S.vyh]}},
+  {d:5, name:"П’ятниця", note:"", lessons:{1:[S.el], 2:[S.eng_gr, S.comp], 3:[S.auto]}}
+];
+
+function subjHtml(x, split){
+  return '<div class="subj">' + x.n + (split ? '<small>' + x.t + '</small>' : '') + '</div>';
+}
+
+function rowHtml(pairNo, list, dayNum){
+  const p = PAIRS[pairNo - 1];
+  const split = list.length > 1;
+  const first = list[0];
+  const body = split
+    ? '<div class="split">' + list.map(x => subjHtml(x, true)).join('') +
+      '<div class="subj"><small>у розкладі дві дисципліни на цій парі</small></div></div>'
+    : subjHtml(first, false);
+  const seen = new Set();
+  let links = '';
+  list.forEach(x => {
+    if (x.z && !seen.has(x.z.u)){
+      seen.add(x.z.u);
+      const tip = 'Ідентифікатор: ' + x.z.id + (x.z.pw !== '—' ? ' · код: ' + x.z.pw : '');
+      links += '<a class="zoom" href="' + x.z.u + '" target="_blank" rel="noopener" title="' + tip + '">Zoom</a>';
+    }
+  });
+  links += list.map(x =>
+      '<a href="' + x.c + '" target="_blank" rel="noopener">Клас</a>' +
+      (x.j ? '<a href="' + x.j + '" target="_blank" rel="noopener">Журнал</a>' : '')
+    ).join('');
+  return '<div class="row" data-day="' + dayNum + '" data-pair="' + pairNo + '">' +
+      '<div class="num">' + pairNo + '</div>' +
+      '<div class="time">' + p.from + ' – ' + p.to + '</div>' +
+      body +
+      '<div class="teacher">' + (split ? 'Стрижкова Л.В.' : first.t) + '</div>' +
+      '<div class="links">' + links + '</div>' +
+    '</div>';
+}
+
+document.getElementById('days').innerHTML = WEEK.map(day => {
+  const rows = Object.keys(day.lessons).map(Number).sort((a,b)=>a-b)
+    .map(no => rowHtml(no, day.lessons[no], day.d)).join('');
+  return '<section class="day" data-day="' + day.d + '">' +
+    '<div class="day-head"><h2>' + day.name + '</h2>' +
+    (day.note ? '<em>' + day.note + '</em>' : '') + '</div>' + rows + '</section>';
+}).join('');
+
+document.getElementById('bells').innerHTML = PAIRS.map((p, i) => {
+  const off = p.no > 4;
+  const gap = i < PAIRS.length - 1 ? PAIRS[i+1].s - p.e : 0;
+  return '<div class="bell' + (off ? ' off' : '') + '">' +
+      '<span class="p">' + p.no + ' пара</span><span class="t">' + p.from + ' – ' + p.to + '</span>' +
+      (off ? '<span class="tag">не у вашій групі</span>' : '') +
+    '</div>' +
+    (gap ? '<div class="bell break"><span class="p">Перерва</span><span class="t">' + gap + ' хвилин</span></div>' : '');
+}).join('');
+
+/* поточний стан за київським часом */
+function tick(){
+  const f = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Kyiv', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false});
+  const p = {}; f.formatToParts(new Date()).forEach(x => p[x.type] = x.value);
+  const dayIdx = {Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6,Sun:7}[p.weekday];
+  const mins = (+p.hour) * 60 + (+p.minute);
+  const out = document.getElementById('now-text');
+
+  document.querySelectorAll('.today').forEach(el => el.classList.remove('today'));
+  document.querySelectorAll('.row.now').forEach(el => el.classList.remove('now'));
+
+  if (dayIdx > 5){
+    out.innerHTML = 'Вихідний. Наступні заняття — у понеділок о <strong>09.15</strong>, іноземна мова.';
+    return;
+  }
+  const day = WEEK.find(d => d.d === dayIdx);
+  document.querySelector('.day[data-day="' + dayIdx + '"]').classList.add('today');
+  const nums = Object.keys(day.lessons).map(Number).sort((a,b)=>a-b);
+
+  const cur = nums.find(n => mins >= PAIRS[n-1].s && mins <= PAIRS[n-1].e);
+  if (cur){
+    const row = document.querySelector('.row[data-day="' + dayIdx + '"][data-pair="' + cur + '"]');
+    if (row) row.classList.add('now');
+    out.innerHTML = 'Зараз <strong>' + day.lessons[cur].map(x=>x.n).join(' / ') + '</strong>, до ' + PAIRS[cur-1].to + '.';
+    return;
+  }
+  const next = nums.find(n => mins < PAIRS[n-1].s);
+  if (next){
+    out.innerHTML = 'Наступна — <strong>' + day.lessons[next].map(x=>x.n).join(' / ') +
+      '</strong>, початок о ' + PAIRS[next-1].from + '.';
+  } else {
+    out.innerHTML = 'На сьогодні пари закінчились.';
+  }
+}
+tick();
+setInterval(tick, 30000);
+</script>
+</body>
+</html>
