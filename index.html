@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Розклад занять · АТ-25пр</title>
+<script>
+try{
+  var t = localStorage.getItem('schedule-theme');
+  if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+}catch(e){}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cuprum:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,7 +24,56 @@
   --ink-3:#868f95;
   --pencil:#a8291b;
   --blue:#2b5f7b;
+  --blue-fill:#2b5f7b;
+  --surface:#fff;
+  --border-soft:#b9c6cc;
+  --dotted:#c3cac3;
+  --hair:#d5ddd6;
+  --today-bg:#fbfbf7;
+  --shadow:rgba(31,36,41,.06);
 }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#17191b;
+    --sheet:#212427;
+    --grid:#2c3033;
+    --rule:#43484c;
+    --ink:#e9e7e2;
+    --ink-2:#adb2b6;
+    --ink-3:#787e83;
+    --pencil:#e2694f;
+    --blue:#7fc1e8;
+    --blue-fill:#316a88;
+    --surface:#282b2e;
+    --border-soft:#3d4448;
+    --dotted:#393e41;
+    --hair:#34383b;
+    --today-bg:#1c1f21;
+    --shadow:rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#17191b;
+  --sheet:#212427;
+  --grid:#2c3033;
+  --rule:#43484c;
+  --ink:#e9e7e2;
+  --ink-2:#adb2b6;
+  --ink-3:#787e83;
+  --pencil:#e2694f;
+  --blue:#7fc1e8;
+  --blue-fill:#316a88;
+  --surface:#282b2e;
+  --border-soft:#3d4448;
+  --dotted:#393e41;
+  --hair:#34383b;
+  --today-bg:#1c1f21;
+  --shadow:rgba(0,0,0,.35);
+}
+html{color-scheme:light dark}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+body{transition:background-color .15s,color .15s}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -37,8 +92,29 @@ body{
   max-width:1000px;margin:0 auto;
   background:var(--sheet);
   border:1.5px solid var(--ink);
-  box-shadow:0 1px 0 var(--rule), 8px 10px 0 rgba(31,36,41,.06);
+  box-shadow:0 1px 0 var(--rule), 8px 10px 0 var(--shadow);
 }
+
+/* --- панель керування --- */
+.toolbar{display:flex;justify-content:flex-end;gap:8px;padding:12px 22px 0}
+.ctrl-wrap{position:relative}
+.ctrl-btn{
+  font-size:16px;line-height:1;width:34px;height:34px;display:grid;place-items:center;
+  border:1.2px solid var(--ink);background:var(--sheet);color:var(--ink);cursor:pointer;
+}
+.ctrl-btn:hover,.ctrl-btn:focus-visible{background:var(--paper)}
+.ctrl-btn[aria-expanded="true"]{background:var(--pencil);border-color:var(--pencil)}
+.panel{
+  position:absolute;top:100%;right:0;margin-top:6px;width:250px;z-index:20;
+  background:var(--sheet);border:1.5px solid var(--ink);box-shadow:4px 5px 0 var(--shadow);
+  padding:14px 16px 16px;
+}
+.panel h3{margin:0 0 10px;font:700 16px "Cuprum",sans-serif}
+.panel-row{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:10px;color:var(--ink-2)}
+.panel-row input[type="checkbox"]{accent-color:var(--pencil)}
+.panel-row select{margin-left:auto;font:inherit;font-size:13px;padding:3px 6px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink)}
+.panel-hint{margin:6px 0 0;font-size:12px;color:var(--ink-3);line-height:1.4}
 
 /* --- основний напис (title block) --- */
 .block{border-bottom:1.5px solid var(--ink)}
@@ -81,13 +157,13 @@ h1 span{display:block;font-size:19px;font-weight:500;color:var(--ink-2);letter-s
 }
 .day-head em{font-style:normal;font-size:13px;color:var(--ink-3)}
 .day.today .day-head h2{color:var(--pencil)}
-.day.today{background:#fbfbf7}
+.day.today{background:var(--today-bg)}
 
 .row{
   display:grid;
   grid-template-columns:38px 104px minmax(0,1fr) 168px auto;
   gap:0 16px;align-items:center;
-  padding:11px 22px;border-top:1px dotted #c3cac3;
+  padding:11px 22px;border-top:1px dotted var(--dotted);
 }
 .row.now{background:var(--paper);box-shadow:inset 4px 0 0 var(--pencil)}
 .num{
@@ -103,35 +179,35 @@ h1 span{display:block;font-size:19px;font-weight:500;color:var(--ink-2);letter-s
 .links{display:flex;gap:6px;justify-content:flex-end}
 .links a{
   font-size:12.5px;text-decoration:none;color:var(--blue);
-  border:1px solid #b9c6cc;padding:4px 10px;background:#fff;
+  border:1px solid var(--border-soft);padding:4px 10px;background:var(--surface);
 }
-.links a:hover,.links a:focus-visible{background:var(--blue);color:#fff;border-color:var(--blue)}
-.links a.zoom{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:500}
-.links a.zoom:hover,.links a.zoom:focus-visible{background:var(--ink);border-color:var(--ink)}
+.links a:hover,.links a:focus-visible{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill)}
+.links a.zoom{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill);font-weight:500}
+.links a.zoom:hover,.links a.zoom:focus-visible{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
 .split{display:grid;gap:8px}
-.split .subj + .subj{padding-top:8px;border-top:1px dotted #c3cac3}
+.split .subj + .subj{padding-top:8px;border-top:1px dotted var(--dotted)}
 
 /* --- zoom --- */
 .rooms{padding:20px 22px 24px;border-top:1.5px solid var(--ink)}
 .rooms h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
 .rooms p{margin:0 0 14px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
 .rooms .hint{margin:14px 0 0;color:var(--ink-3);font-size:12.5px}
-.room-list{display:grid;gap:0;border-top:1px solid #d5ddd6}
+.room-list{display:grid;gap:0;border-top:1px solid var(--hair)}
 .room{display:grid;grid-template-columns:minmax(0,1fr) 180px 96px;gap:14px;align-items:center;
-  padding:10px 0;border-bottom:1px solid #d5ddd6}
+  padding:10px 0;border-bottom:1px solid var(--hair)}
 .room .who{font-weight:500;font-size:15px;line-height:1.3}
 .room .who small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
 .room .code{font-size:13.5px;color:var(--ink-2);user-select:all}
 .room a{justify-self:end;font-size:12.5px;text-decoration:none;color:var(--blue);
-  border:1px solid #b9c6cc;padding:5px 12px;background:#fff}
-.room a:hover,.room a:focus-visible{background:var(--blue);color:#fff;border-color:var(--blue)}
+  border:1px solid var(--border-soft);padding:5px 12px;background:var(--surface)}
+.room a:hover,.room a:focus-visible{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill)}
 
 /* --- дзвінки --- */
 .bells{padding:20px 22px 26px;border-top:1.5px solid var(--ink);background:var(--paper)}
 .bells h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
 .bells p{margin:0 0 16px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
 .bell-list{display:grid;gap:0;max-width:520px}
-.bell{display:flex;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid #d5ddd6}
+.bell{display:flex;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid var(--hair)}
 .bell:last-child{border-bottom:0}
 .bell .p{font:700 15px/1 "Cuprum",sans-serif;width:74px}
 .bell .t{font-size:15px}
@@ -159,6 +235,7 @@ footer ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;
   .teacher{grid-column:2;order:3}
   .links{grid-column:2;order:4;justify-content:flex-start;margin-top:8px}
   .day-head,#now,.bells,.rooms{padding-left:16px;padding-right:16px}
+  .toolbar{padding:10px 16px 0}
   .room{grid-template-columns:1fr auto;gap:4px 12px}
   .room .who{grid-column:1/-1}
   .room a{grid-column:2}
@@ -168,13 +245,36 @@ footer ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;
 @media print{
   body{background:#fff;padding:0}
   .sheet{box-shadow:none}
-  .links{display:none}
+  .links,.toolbar{display:none}
 }
 </style>
 </head>
 <body>
 
 <main class="sheet">
+  <div class="toolbar">
+    <div class="ctrl-wrap">
+      <button id="notifBtn" class="ctrl-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Сповіщення" aria-label="Налаштування сповіщень">🔔</button>
+      <div id="notifPanel" class="panel" role="menu" hidden>
+        <h3>Сповіщення</h3>
+        <label class="panel-row">
+          <input type="checkbox" id="notifEnabled">
+          Нагадувати про пари
+        </label>
+        <label class="panel-row">
+          За скільки хвилин
+          <select id="notifLead">
+            <option value="0">На початку</option>
+            <option value="5">За 5 хв</option>
+            <option value="10">За 10 хв</option>
+            <option value="15">За 15 хв</option>
+          </select>
+        </label>
+        <p class="panel-hint" id="notifStatus"></p>
+      </div>
+    </div>
+    <button id="themeBtn" class="ctrl-btn" type="button" title="Перемкнути тему" aria-label="Перемкнути тему">🌙</button>
+  </div>
   <div class="block">
     <div class="block-top">
       <h1>Розклад занять<span>Дистанційне навчання</span></h1>
@@ -332,11 +432,117 @@ document.getElementById('bells').innerHTML = PAIRS.map((p, i) => {
     (gap ? '<div class="bell break"><span class="p">Перерва</span><span class="t">' + gap + ' хвилин</span></div>' : '');
 }).join('');
 
+/* --- тема --- */
+const THEME_KEY = 'schedule-theme';
+const themeBtn = document.getElementById('themeBtn');
+
+function systemPrefersDark(){
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function isDarkNow(){
+  const explicit = document.documentElement.getAttribute('data-theme');
+  return explicit ? explicit === 'dark' : systemPrefersDark();
+}
+function updateThemeBtn(){
+  const dark = isDarkNow();
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+  themeBtn.title = dark ? 'Світла тема' : 'Темна тема';
+}
+themeBtn.addEventListener('click', () => {
+  const next = isDarkNow() ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem(THEME_KEY, next);
+  updateThemeBtn();
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  if (!localStorage.getItem(THEME_KEY)) updateThemeBtn();
+});
+updateThemeBtn();
+
+/* --- сповіщення --- */
+const NOTIF_KEY = 'schedule-notif';
+function loadNotifSettings(){
+  try{
+    const s = JSON.parse(localStorage.getItem(NOTIF_KEY));
+    return s && typeof s === 'object' ? {enabled: !!s.enabled, lead: Number(s.lead) || 0} : {enabled:false, lead:10};
+  }catch(e){ return {enabled:false, lead:10}; }
+}
+function saveNotifSettings(){ localStorage.setItem(NOTIF_KEY, JSON.stringify(notifSettings)); }
+const notifSettings = loadNotifSettings();
+
+const notifBtn = document.getElementById('notifBtn');
+const notifPanel = document.getElementById('notifPanel');
+const notifEnabled = document.getElementById('notifEnabled');
+const notifLead = document.getElementById('notifLead');
+const notifStatus = document.getElementById('notifStatus');
+
+notifEnabled.checked = notifSettings.enabled;
+notifLead.value = String(notifSettings.lead);
+
+function renderNotifStatus(){
+  if (!('Notification' in window)){
+    notifStatus.textContent = 'Цей браузер не підтримує сповіщення.';
+    return;
+  }
+  const label = {granted:'Дозвіл надано.', denied:'Дозвіл відхилено — увімкніть у налаштуваннях браузера.', default:'Дозвіл ще не запитано.'}[Notification.permission];
+  notifStatus.textContent = label + ' Працює, поки ця вкладка відкрита в браузері.';
+}
+renderNotifStatus();
+
+function togglePanel(open){
+  notifPanel.hidden = !open;
+  notifBtn.setAttribute('aria-expanded', String(open));
+}
+notifBtn.addEventListener('click', () => togglePanel(notifPanel.hidden));
+document.addEventListener('click', e => {
+  if (!notifPanel.hidden && !e.target.closest('.ctrl-wrap')) togglePanel(false);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !notifPanel.hidden) togglePanel(false);
+});
+
+notifEnabled.addEventListener('change', async () => {
+  if (notifEnabled.checked && 'Notification' in window && Notification.permission === 'default'){
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') notifEnabled.checked = false;
+  }
+  if (notifEnabled.checked && (!('Notification' in window) || Notification.permission !== 'granted')){
+    notifEnabled.checked = false;
+  }
+  notifSettings.enabled = notifEnabled.checked;
+  saveNotifSettings();
+  renderNotifStatus();
+});
+notifLead.addEventListener('change', () => {
+  notifSettings.lead = Number(notifLead.value);
+  saveNotifSettings();
+});
+
+const notified = new Set();
+function checkNotifications(dateKey, dayIdx, mins, day, nums){
+  if (!notifSettings.enabled || !('Notification' in window) || Notification.permission !== 'granted') return;
+  if (!day) return;
+  nums.forEach(n => {
+    const start = PAIRS[n-1].s;
+    const notifyAt = start - notifSettings.lead;
+    const key = dateKey + '-' + n;
+    if (mins >= notifyAt && mins <= start && !notified.has(key)){
+      notified.add(key);
+      const title = day.lessons[n].map(x => x.n).join(' / ');
+      const body = notifSettings.lead > 0
+        ? 'Початок о ' + PAIRS[n-1].from + ' (через ' + notifSettings.lead + ' хв)'
+        : 'Починається зараз, о ' + PAIRS[n-1].from;
+      try{ new Notification(title, {body, tag: key}); }catch(e){}
+    }
+  });
+}
+
 /* поточний стан за київським часом */
 function tick(){
-  const f = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Kyiv', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false});
+  const f = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Kyiv', weekday:'short', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false});
   const p = {}; f.formatToParts(new Date()).forEach(x => p[x.type] = x.value);
   const dayIdx = {Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6,Sun:7}[p.weekday];
+  const dateKey = p.year + '-' + p.month + '-' + p.day;
   const mins = (+p.hour) * 60 + (+p.minute);
   const out = document.getElementById('now-text');
 
@@ -350,6 +556,7 @@ function tick(){
   const day = WEEK.find(d => d.d === dayIdx);
   document.querySelector('.day[data-day="' + dayIdx + '"]').classList.add('today');
   const nums = Object.keys(day.lessons).map(Number).sort((a,b)=>a-b);
+  checkNotifications(dateKey, dayIdx, mins, day, nums);
 
   const cur = nums.find(n => mins >= PAIRS[n-1].s && mins <= PAIRS[n-1].e);
   if (cur){
