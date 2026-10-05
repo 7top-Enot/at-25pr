@@ -2,7 +2,8 @@
 <html lang="uk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
 <title>Розклад занять · АТ-25пр</title>
 <script>
 try{
@@ -12,321 +13,313 @@ try{
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cuprum:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#e7eae2;
-  --sheet:#f3f4ef;
-  --grid:#cfd8d2;
-  --rule:#9ba59d;
-  --ink:#1f2429;
-  --ink-2:#5c646b;
-  --ink-3:#868f95;
-  --pencil:#a8291b;
-  --blue:#2b5f7b;
-  --blue-fill:#2b5f7b;
-  --surface:#fff;
-  --border-soft:#b9c6cc;
-  --dotted:#c3cac3;
-  --hair:#d5ddd6;
-  --today-bg:#fbfbf7;
-  --shadow:rgba(31,36,41,.06);
+  --bg:#f2f4fa; --surface:#ffffff; --surface-2:#f6f7fb; --text:#0f172a; --muted:#566178; --faint:#6b7588;
+  --line:#e2e6ef; --accent:#4f46e5; --on-accent:#ffffff; --zoom:#1b6fe0; --live:#16a34a;
+  --shadow:0 1px 2px rgba(15,23,42,.05), 0 10px 30px rgba(15,23,42,.07);
+  --glow1:#e4e1ff; --glow2:#d6f1fa;
+  --chip-l:94%; --chip-t:28%; --bar-l:50%;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#17191b;
-    --sheet:#212427;
-    --grid:#2c3033;
-    --rule:#43484c;
-    --ink:#e9e7e2;
-    --ink-2:#adb2b6;
-    --ink-3:#787e83;
-    --pencil:#e2694f;
-    --blue:#7fc1e8;
-    --blue-fill:#316a88;
-    --surface:#282b2e;
-    --border-soft:#3d4448;
-    --dotted:#393e41;
-    --hair:#34383b;
-    --today-bg:#1c1f21;
-    --shadow:rgba(0,0,0,.35);
+    --bg:#090e1d; --surface:#121a2f; --surface-2:#0e1527; --text:#e8ecf7; --muted:#a3adc2; --faint:#8b96ad;
+    --line:#222c47; --accent:#8b93ff; --on-accent:#0a0f1e; --zoom:#2f7ff0; --live:#34d399;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.35);
+    --glow1:#1c1b4a; --glow2:#0c2f3f;
+    --chip-l:24%; --chip-t:84%; --bar-l:62%;
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#17191b;
-  --sheet:#212427;
-  --grid:#2c3033;
-  --rule:#43484c;
-  --ink:#e9e7e2;
-  --ink-2:#adb2b6;
-  --ink-3:#787e83;
-  --pencil:#e2694f;
-  --blue:#7fc1e8;
-  --blue-fill:#316a88;
-  --surface:#282b2e;
-  --border-soft:#3d4448;
-  --dotted:#393e41;
-  --hair:#34383b;
-  --today-bg:#1c1f21;
-  --shadow:rgba(0,0,0,.35);
+  --bg:#090e1d; --surface:#121a2f; --surface-2:#0e1527; --text:#e8ecf7; --muted:#a3adc2; --faint:#8b96ad;
+  --line:#222c47; --accent:#8b93ff; --on-accent:#0a0f1e; --zoom:#2f7ff0; --live:#34d399;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.35);
+  --glow1:#1c1b4a; --glow2:#0c2f3f;
+  --chip-l:24%; --chip-t:84%; --bar-l:62%;
+  color-scheme:dark;
 }
-html{color-scheme:light dark}
 :root[data-theme="light"]{color-scheme:light}
-:root[data-theme="dark"]{color-scheme:dark}
-body{transition:background-color .15s,color .15s}
+
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%; scroll-padding-top:84px}
 body{
-  margin:0;
-  padding:22px 14px 60px;
-  background:var(--paper);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:26px 26px;
-  color:var(--ink);
-  font:400 16px/1.5 "IBM Plex Sans", system-ui, sans-serif;
-  font-variant-numeric:tabular-nums;
+  margin:0; min-height:100vh; color:var(--text);
+  font:400 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 420px at 6% -8%, var(--glow1), transparent 62%),
+    radial-gradient(760px 420px at 100% 0, var(--glow2), transparent 56%),
+    var(--bg);
+  transition:background-color .2s, color .2s;
 }
-.sheet{
-  max-width:1000px;margin:0 auto;
-  background:var(--sheet);
-  border:1.5px solid var(--ink);
-  box-shadow:0 1px 0 var(--rule), 8px 10px 0 var(--shadow);
-}
+.app{max-width:920px; margin:0 auto; padding:max(14px, env(safe-area-inset-top)) 16px 56px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px; border-radius:8px}
 
-/* --- панель керування --- */
-.toolbar{display:flex;justify-content:flex-end;gap:8px;padding:12px 22px 0}
+/* ---------- шапка ---------- */
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0 18px}
+.brand{display:flex; align-items:center; gap:12px; min-width:0; flex:1 1 auto}
+.brand > div:last-child{min-width:0}
+.logo{
+  flex:none; width:46px; height:46px; border-radius:15px; display:grid; place-items:center;
+  font-weight:800; letter-spacing:.02em; color:#fff;
+  background:linear-gradient(135deg,#6366f1,#06b6d4); box-shadow:0 8px 18px -4px rgba(79,70,229,.55);
+}
+h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing:-.015em; white-space:nowrap}
+.brand p{margin:2px 0 0; font-size:.82rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tools{display:flex; gap:8px; flex:none}
+.icon-btn{
+  width:42px; height:42px; border-radius:13px; border:1px solid var(--line); background:var(--surface); color:var(--text);
+  display:grid; place-items:center; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s, color .12s, border-color .12s;
+}
+.icon-btn:hover{color:var(--accent); border-color:var(--accent)}
+.icon-btn:active{transform:scale(.95)}
+.icon-btn[aria-expanded="true"]{background:var(--accent); color:var(--on-accent); border-color:var(--accent)}
 .ctrl-wrap{position:relative}
-.ctrl-btn{
-  font-size:16px;line-height:1;width:34px;height:34px;display:grid;place-items:center;
-  border:1.2px solid var(--ink);background:var(--sheet);color:var(--ink);cursor:pointer;
+.pop{
+  position:absolute; right:0; top:calc(100% + 10px); z-index:60; width:min(300px, calc(100vw - 32px));
+  background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px; box-shadow:0 24px 60px rgba(0,0,0,.22);
 }
-.ctrl-btn:hover,.ctrl-btn:focus-visible{background:var(--paper)}
-.ctrl-btn[aria-expanded="true"]{background:var(--pencil);border-color:var(--pencil)}
-.panel{
-  position:absolute;top:100%;right:0;margin-top:6px;width:250px;z-index:20;
-  background:var(--sheet);border:1.5px solid var(--ink);box-shadow:4px 5px 0 var(--shadow);
-  padding:14px 16px 16px;
+.pop h3{margin:0 0 12px; font-size:1rem; font-weight:700}
+.pop .row{display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:.9rem; color:var(--muted)}
+.pop input[type="checkbox"]{width:18px; height:18px; accent-color:var(--accent)}
+.pop select{
+  margin-left:auto; font:inherit; font-size:.85rem; padding:6px 8px; border-radius:10px;
+  border:1px solid var(--line); background:var(--surface-2); color:var(--text);
 }
-.panel h3{margin:0 0 10px;font:700 16px "Cuprum",sans-serif}
-.panel-row{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:10px;color:var(--ink-2)}
-.panel-row input[type="checkbox"]{accent-color:var(--pencil)}
-.panel-row select{margin-left:auto;font:inherit;font-size:13px;padding:3px 6px;
-  border:1px solid var(--rule);background:var(--surface);color:var(--ink)}
-.panel-hint{margin:6px 0 0;font-size:12px;color:var(--ink-3);line-height:1.4}
+.pop .hint{margin:6px 0 0; font-size:.78rem; line-height:1.45; color:var(--faint)}
 
-/* --- основний напис (title block) --- */
-.block{border-bottom:1.5px solid var(--ink)}
-.block-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;padding:20px 22px 16px}
-h1{
-  font:700 44px/0.92 "Cuprum", sans-serif;
-  letter-spacing:.005em;margin:0;flex:1 1 320px;
+/* ---------- головна картка «зараз» ---------- */
+.hero{
+  --h:250; position:relative; overflow:hidden; border-radius:28px; color:#fff; padding:22px 22px 20px;
+  background:linear-gradient(135deg, hsl(var(--h) 62% 32%), hsl(calc(var(--h) + 24) 62% 21%));
+  box-shadow:0 22px 44px -14px hsl(var(--h) 70% 22% / .65);
+  transition:background .4s;
 }
-h1 span{display:block;font-size:19px;font-weight:500;color:var(--ink-2);letter-spacing:.06em;margin-top:8px}
-.group{
-  font:700 30px/1 "Cuprum", sans-serif;
-  border:1.5px solid var(--ink);padding:10px 16px 8px;background:var(--paper);
+.hero::before, .hero::after{content:""; position:absolute; border-radius:50%; pointer-events:none}
+.hero::before{width:300px; height:300px; right:-90px; top:-120px; background:radial-gradient(circle, rgba(255,255,255,.2), transparent 68%)}
+.hero::after{width:220px; height:220px; left:-70px; bottom:-130px; background:radial-gradient(circle, rgba(255,255,255,.12), transparent 70%)}
+.hero > *{position:relative; z-index:1}
+.hero-top{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:99px;
+  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+  font-size:.74rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
 }
-.meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
-.meta div{padding:9px 22px;border-right:1px solid var(--rule);font-size:14px;color:var(--ink-2)}
-.meta div:last-child{border-right:0}
-.meta b{display:block;font:500 17px/1.3 "IBM Plex Sans",sans-serif;color:var(--ink)}
+.eyebrow i{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.7)}
+.eyebrow.live i{background:#4ade80; box-shadow:0 0 0 0 rgba(74,222,128,.7); animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)} 100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.clock{font-size:.85rem; color:rgba(255,255,255,.82)}
+.hero h2{margin:0; font-size:clamp(1.45rem, 5vw, 2.15rem); line-height:1.15; font-weight:800; letter-spacing:-.02em}
+.hero .meta{margin:8px 0 0; color:rgba(255,255,255,.88); font-size:.98rem}
+.count{
+  display:inline-block; margin-top:14px; padding:7px 14px; border-radius:12px;
+  background:rgba(255,255,255,.14); font-weight:700; font-size:1.02rem;
+}
+.hprog{height:6px; border-radius:99px; background:rgba(255,255,255,.22); margin-top:14px; overflow:hidden}
+.hprog i{display:block; height:100%; border-radius:99px; background:#fff; transition:width .6s}
+.hero-acts{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+.hero .zid{color:rgba(255,255,255,.85); margin-top:12px; display:block; font-size:.82rem}
+.hero .zid:hover{color:#fff}
+.nozoom{margin:16px 0 0; font-size:.9rem; color:rgba(255,255,255,.85)}
 
-/* --- рядок стану --- */
-#now{
-  display:flex;gap:12px;align-items:baseline;
-  padding:13px 22px;border-bottom:1.5px solid var(--ink);
-  background:var(--paper);font-size:15px;color:var(--ink-2);
+/* ---------- кнопки ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px; height:36px; padding:0 13px; border-radius:11px;
+  font:600 .85rem/1 Inter, system-ui, sans-serif; text-decoration:none; cursor:pointer; white-space:nowrap;
+  border:1px solid var(--line); background:var(--surface); color:var(--text); transition:transform .12s, background .12s, border-color .12s;
 }
-#now .tick{
-  flex:none;width:9px;height:9px;background:var(--pencil);
-  border-radius:50%;transform:translateY(-1px)
-}
-#now strong{color:var(--ink);font-weight:600}
-
-/* --- дні --- */
-.day{border-bottom:1px solid var(--rule)}
-.day:last-of-type{border-bottom:0}
-.day-head{
-  display:flex;align-items:baseline;gap:12px;
-  padding:16px 22px 8px;
-}
-.day-head h2{
-  font:700 23px/1 "Cuprum",sans-serif;margin:0;letter-spacing:.02em;
-}
-.day-head em{font-style:normal;font-size:13px;color:var(--ink-3)}
-.day.today .day-head h2{color:var(--pencil)}
-.day.today{background:var(--today-bg)}
-
-.row{
-  display:grid;
-  grid-template-columns:38px 104px minmax(0,1fr) 205px 240px;
-  gap:0 16px;align-items:center;
-  padding:11px 22px;border-top:1px dotted var(--dotted);
-}
-.row.now{background:var(--paper);box-shadow:inset 4px 0 0 var(--pencil)}
-.num{
-  font:700 15px/1 "Cuprum",sans-serif;
-  width:28px;height:28px;display:grid;place-items:center;
-  border:1.2px solid var(--ink);border-radius:50%;
-}
-.row.now .num{border-color:var(--pencil);color:var(--pencil)}
-.time{font-size:14px;color:var(--ink-2);white-space:nowrap}
-.subj{font-weight:500;line-height:1.35}
-.subj small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
-.teacher{font-size:14px;color:var(--ink-2)}
-.links{display:flex;gap:6px;justify-content:flex-end;align-items:flex-start}
-.links a{
-  font-size:12.5px;text-decoration:none;color:var(--blue);
-  border:1px solid var(--border-soft);padding:4px 10px;background:var(--surface);
-}
-.links a:hover,.links a:focus-visible{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill)}
-.links a.zoom{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill);font-weight:500}
-.links a.zoom:hover,.links a.zoom:focus-visible{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
-.split{display:grid;gap:8px}
-.split .part{display:grid;gap:6px}
-.split .part .links{justify-content:flex-start}
+.btn:active{transform:scale(.97)}
+.btn.zoom{background:var(--zoom); border-color:var(--zoom); color:#fff}
+.btn.zoom:hover{filter:brightness(1.08)}
+.btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
+.btn.big{height:48px; padding:0 20px; border-radius:15px; font-size:.95rem}
+.btn.zoomw{background:#fff; border-color:#fff; color:#0f172a}
+.btn.zoomw svg{color:#1b6fe0}
+.btn.zoomw:hover{background:#f1f5ff}
+.btn.ghostw{background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.34); color:#fff}
+.btn.ghostw:hover{background:rgba(255,255,255,.24)}
 .zid{
-  font:inherit;font-size:11.5px;line-height:1.2;color:var(--ink-3);background:none;border:0;padding:2px 0 0;
-  cursor:pointer;text-align:right;white-space:nowrap;
+  font:inherit; font-size:.76rem; line-height:1.3; color:var(--faint); background:none; border:0; padding:3px 0 0;
+  cursor:pointer; text-align:left;
 }
-.zid:hover,.zid:focus-visible{color:var(--blue);text-decoration:underline}
-.zoom-wrap{display:grid;justify-items:end}
-.day.next .day-head h2{color:var(--blue)}
-.day-head .badge{font:600 11px/1 "IBM Plex Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase;
-  padding:4px 7px;border:1px solid currentColor;margin-left:auto}
-.day.today .badge{color:var(--pencil)}
-.day.next .badge{color:var(--blue)}
-#now .count{white-space:nowrap}
-.split .subj + .subj{padding-top:8px;border-top:1px dotted var(--dotted)}
+.zid:hover{color:var(--accent); text-decoration:underline}
 
-/* --- zoom --- */
-.rooms{padding:20px 22px 24px;border-top:1.5px solid var(--ink)}
-.rooms h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
-.rooms p{margin:0 0 14px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
-.rooms .hint{margin:14px 0 0;color:var(--ink-3);font-size:12.5px}
-.room-list{display:grid;gap:0;border-top:1px solid var(--hair)}
-.room{display:grid;grid-template-columns:minmax(0,1fr) 180px 96px;gap:14px;align-items:center;
-  padding:10px 0;border-bottom:1px solid var(--hair)}
-.room .who{font-weight:500;font-size:15px;line-height:1.3}
-.room .who small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
-.room .code{font-size:13.5px;color:var(--ink-2);user-select:all}
-.room a{justify-self:end;font-size:12.5px;text-decoration:none;color:var(--blue);
-  border:1px solid var(--border-soft);padding:5px 12px;background:var(--surface)}
-.room a:hover,.room a:focus-visible{background:var(--blue-fill);color:#fff;border-color:var(--blue-fill)}
-
-/* --- дзвінки --- */
-.bells{padding:20px 22px 26px;border-top:1.5px solid var(--ink);background:var(--paper)}
-.bells h2{font:700 20px/1 "Cuprum",sans-serif;margin:0 0 4px}
-.bells p{margin:0 0 16px;font-size:13.5px;color:var(--ink-2);max-width:62ch}
-.bell-list{display:grid;gap:0;max-width:520px}
-.bell{display:flex;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid var(--hair)}
-.bell:last-child{border-bottom:0}
-.bell .p{font:700 15px/1 "Cuprum",sans-serif;width:74px}
-.bell .t{font-size:15px}
-.bell.break{color:var(--ink-3);font-size:13px;padding:4px 0}
-.bell.break .p{font-weight:500;font-family:"IBM Plex Sans",sans-serif;font-size:13px}
-.bell.off .p,.bell.off .t{color:var(--ink-3)}
-.bell .tag{margin-left:auto;font-size:12px;color:var(--ink-3)}
-
-footer{
-  max-width:1000px;margin:16px auto 0;padding:0 4px;
-  font-size:13px;color:var(--ink-2);
+/* ---------- вибір дня ---------- */
+.chips{
+  position:sticky; top:0; z-index:30; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none;
+  margin:20px -16px 0; padding:10px 16px;
+  background:var(--bg); background:color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
 }
-footer ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:1 1 0; min-width:0; display:grid; justify-items:center; gap:1px; padding:8px 4px; border-radius:15px; cursor:pointer;
+  font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--line); position:relative; transition:background .15s, color .15s;
+}
+.chip span{font-size:.72rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+.chip b{font-size:1.1rem; font-weight:800; line-height:1.2}
+.chip.wide{align-content:center; font-weight:700; font-size:.8rem; flex:1.7 1 0}
+.chip.today::after{content:""; position:absolute; bottom:5px; width:5px; height:5px; border-radius:50%; background:var(--accent)}
+.chip.on{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.chip.on span{color:inherit; opacity:.85}
+.chip.on.today::after{background:var(--on-accent)}
 
-@media (max-width:760px){
-  body{padding:12px 8px 40px;background-size:20px 20px}
-  h1{font-size:34px}
-  .meta{grid-template-columns:1fr 1fr}
-  .meta div:nth-child(2){border-right:0}
-  .meta div:nth-child(3){border-top:1px solid var(--rule)}
-  .row{grid-template-columns:30px 1fr;gap:2px 12px;padding:12px 16px}
-  .time{grid-column:2;order:2}
-  .subj{grid-column:2;order:1}
-  .teacher{grid-column:2;order:3}
-  .links{grid-column:2;order:4;justify-content:flex-start;margin-top:8px;flex-wrap:wrap}
-  .zoom-wrap{justify-items:start}
-  .zid{text-align:left}
-  .day-head,#now,.bells,.rooms{padding-left:16px;padding-right:16px}
-  .toolbar{padding:10px 16px 0}
-  .room{grid-template-columns:1fr auto;gap:4px 12px}
-  .room .who{grid-column:1/-1}
-  .room a{grid-column:2}
-  .block-top{padding:16px}
-  .meta div{padding:8px 16px}
+/* ---------- пари ---------- */
+.day-head{display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin:18px 4px 10px}
+.day-head h2{margin:0; font-size:1.15rem; font-weight:800; letter-spacing:-.01em}
+.day-head .dd{color:var(--muted); font-size:.9rem}
+.day-head em{
+  font-style:normal; font-size:.72rem; font-weight:600; padding:3px 9px; border-radius:99px;
+  background:var(--surface); border:1px solid var(--line); color:var(--muted);
+}
+.lessons{display:grid; gap:12px}
+.lesson{
+  --h:250; position:relative; overflow:hidden; display:grid; grid-template-columns:76px 1fr; gap:6px 16px;
+  padding:16px 16px 16px 20px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow);
+  transition:opacity .2s, box-shadow .2s, border-color .2s;
+}
+.lesson::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:hsl(var(--h) 65% var(--bar-l))}
+.when b{display:block; font-size:1.25rem; font-weight:800; letter-spacing:-.01em; line-height:1.2}
+.when span{display:block; color:var(--muted); font-size:.85rem}
+.when i{
+  display:inline-block; margin-top:8px; font-style:normal; font-size:.7rem; font-weight:700; padding:3px 8px; border-radius:99px;
+  background:hsl(var(--h) 70% var(--chip-l)); color:hsl(var(--h) 60% var(--chip-t)); white-space:nowrap;
+}
+.body{min-width:0; display:grid; gap:12px}
+.sub{display:flex; align-items:center; justify-content:space-between; gap:10px 14px; flex-wrap:wrap}
+.sub + .sub{padding-top:12px; border-top:1px dashed var(--line)}
+.sub-text{min-width:0; flex:1 1 220px}
+.sub-text h3{margin:0; font-size:1.02rem; line-height:1.3; font-weight:700}
+.sub-text p{margin:2px 0 0; color:var(--muted); font-size:.88rem}
+.acts{display:flex; flex-wrap:wrap; gap:8px}
+.shared{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px}
+.split-note{margin:0; font-size:.78rem; color:var(--faint)}
+.prog{height:4px; border-radius:99px; background:var(--line); overflow:hidden; display:none}
+.prog i{display:block; height:100%; width:0; background:hsl(var(--h) 65% var(--bar-l)); transition:width .6s}
+.tag{position:absolute; top:12px; right:14px; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+.lesson[data-state="past"]{opacity:.55}
+.lesson[data-state="past"] .tag::after{content:"завершено"; color:var(--faint)}
+.lesson[data-state="next"] .tag::after{content:"далі"; color:var(--accent)}
+.lesson[data-state="now"]{border-color:hsl(var(--h) 65% var(--bar-l)); box-shadow:0 0 0 4px hsl(var(--h) 80% 60% / .2), var(--shadow)}
+.lesson[data-state="now"] .tag::after{content:"● зараз"; color:var(--live)}
+.lesson[data-state="now"] .prog{display:block}
+
+/* ---------- блоки внизу ---------- */
+.block{margin-top:38px}
+.block > h2{margin:0 4px 6px; font-size:1.15rem; font-weight:800; letter-spacing:-.01em}
+.lead{margin:0 4px 16px; color:var(--muted); font-size:.9rem; max-width:64ch}
+.rooms, .teachers{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px}
+.room, .teacher-card{
+  display:grid; gap:10px; align-content:start; padding:16px; border-radius:20px; background:var(--surface);
+  border:1px solid var(--line); box-shadow:var(--shadow);
+}
+.room h3, .teacher-card h3{margin:0; font-size:.98rem; line-height:1.3; font-weight:700}
+.room p, .teacher-card p{margin:2px 0 0; color:var(--muted); font-size:.85rem}
+.kv{display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:12px; background:var(--surface-2)}
+.kv span{font-size:.72rem; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:.06em; width:34px}
+.kv b{font-weight:600; font-size:.95rem; letter-spacing:.01em}
+.copy{
+  margin-left:auto; width:32px; height:32px; border-radius:9px; border:1px solid var(--line); background:var(--surface);
+  color:var(--muted); display:grid; place-items:center; cursor:pointer;
+}
+.copy:hover{color:var(--accent); border-color:var(--accent)}
+.hint{margin:12px 4px 0; font-size:.82rem; color:var(--faint)}
+.bells{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:8px 12px}
+.bell{display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:14px; background:var(--surface); border:1px solid var(--line)}
+.bell .n{
+  flex:none; width:28px; height:28px; border-radius:9px; display:grid; place-items:center; font-weight:800; font-size:.85rem;
+  background:var(--accent); color:var(--on-accent);
+}
+.bell .t{font-weight:600}
+.bell em{margin-left:auto; font-style:normal; font-size:.72rem; color:var(--faint)}
+.bell.off{opacity:.55}
+.bell.off .n{background:var(--line); color:var(--muted)}
+footer{margin-top:40px; text-align:center; font-size:.78rem; color:var(--faint)}
+
+@media (max-width:640px){
+  .app{padding-left:14px; padding-right:14px}
+  .chips{margin-left:-14px; margin-right:-14px; padding-left:14px; padding-right:14px}
+  .hero{border-radius:24px; padding:18px 18px 16px}
+  .lesson{grid-template-columns:1fr; padding:14px 14px 14px 18px}
+  .when{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+  .when b{font-size:1.1rem}
+  .when i{margin-top:0}
+  .sub{flex-direction:column; align-items:flex-start}
+  .hero-acts .btn.big{flex:1 1 calc(50% - 5px); padding:0 12px}
+  .hero-acts .btn.zoomw{flex:1 1 100%}
+  .tag{top:10px; right:12px}
+}
+@media (max-width:520px){ .brand .long{display:none} }
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important}
 }
 @media print{
-  body{background:#fff;padding:0}
-  .sheet{box-shadow:none}
-  .links,.toolbar{display:none}
+  body{background:#fff}
+  .tools, .chips, .hero-acts{display:none !important}
+  .day[hidden]{display:block !important}
+  .lesson, .room, .teacher-card, .bell{box-shadow:none}
 }
 </style>
 </head>
 <body>
-
-<main class="sheet">
-  <div class="toolbar">
-    <button id="icsBtn" class="ctrl-btn" type="button" title="Додати розклад у календар телефона" aria-label="Завантажити розклад для календаря">📅</button>
-    <div class="ctrl-wrap">
-      <button id="notifBtn" class="ctrl-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Сповіщення" aria-label="Налаштування сповіщень">🔔</button>
-      <div id="notifPanel" class="panel" role="menu" hidden>
-        <h3>Сповіщення</h3>
-        <label class="panel-row">
-          <input type="checkbox" id="notifEnabled">
-          Нагадувати про пари
-        </label>
-        <label class="panel-row">
-          За скільки хвилин
-          <select id="notifLead">
-            <option value="0">На початку</option>
-            <option value="5">За 5 хв</option>
-            <option value="10">За 10 хв</option>
-            <option value="15">За 15 хв</option>
-          </select>
-        </label>
-        <p class="panel-hint" id="notifStatus"></p>
-        <p class="panel-hint">Щоб нагадування приходили й без відкритої вкладки, натисніть 📅 і додайте розклад у календар телефона.</p>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">АТ</div>
+      <div><h1>Розклад занять</h1><p>Група АТ-25пр<span class="long"> · дистанційне навчання</span></p></div>
+    </div>
+    <div class="tools">
+      <button id="icsBtn" class="icon-btn" type="button" title="Додати розклад у календар телефона" aria-label="Завантажити розклад для календаря"></button>
+      <div class="ctrl-wrap">
+        <button id="notifBtn" class="icon-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Сповіщення" aria-label="Налаштування сповіщень"></button>
+        <div id="notifPanel" class="pop" role="menu" hidden>
+          <h3>Сповіщення</h3>
+          <label class="row"><input type="checkbox" id="notifEnabled"> Нагадувати про пари</label>
+          <label class="row">За скільки хвилин
+            <select id="notifLead">
+              <option value="0">На початку</option>
+              <option value="5">За 5 хв</option>
+              <option value="10">За 10 хв</option>
+              <option value="15">За 15 хв</option>
+            </select>
+          </label>
+          <p class="hint" id="notifStatus"></p>
+          <p class="hint">Щоб нагадування приходили й без відкритої вкладки, завантажте розклад у календар телефона (кнопка поруч).</p>
+        </div>
       </div>
+      <button id="themeBtn" class="icon-btn" type="button" title="Перемкнути тему" aria-label="Перемкнути тему"></button>
     </div>
-    <button id="themeBtn" class="ctrl-btn" type="button" title="Перемкнути тему" aria-label="Перемкнути тему">🌙</button>
-  </div>
-  <div class="block">
-    <div class="block-top">
-      <h1>Розклад занять<span>Дистанційне навчання</span></h1>
-      <div class="group">АТ-25пр</div>
-    </div>
-    <div class="meta">
-      <div>Навчальних днів<b id="metaDays"></b></div>
-      <div>Пари щодня<b id="metaPairs"></b></div>
-      <div>Початок і кінець<b id="metaTime"></b></div>
-    </div>
-  </div>
+  </header>
 
-  <div id="now"><span class="tick"></span><span id="now-text">Визначаю поточний час…</span></div>
+  <section id="hero" class="hero"><div class="hero-top"><span class="eyebrow"><i></i>Визначаю поточний час…</span></div></section>
 
-  <div id="days"></div>
+  <nav id="chips" class="chips" aria-label="Дні тижня"></nav>
+  <main id="days"></main>
 
-  <section class="rooms">
-    <h2>Zoom-конференції</h2>
-    <p>Одна кімната може обслуговувати кілька дисциплін. Посилання вже містить пароль — код нижче потрібен, якщо заходите за ідентифікатором.</p>
-    <div class="room-list" id="rooms"></div>
+  <section class="block">
+    <h2>Zoom-кімнати</h2>
+    <p class="lead">Одна кімната може обслуговувати кілька дисциплін. Посилання вже містить пароль — код потрібен, лише якщо заходите за ідентифікатором.</p>
+    <div class="rooms" id="rooms"></div>
     <p class="hint" id="roomsHint"></p>
   </section>
 
-  <section class="bells">
+  <section class="block">
     <h2>Дзвінки</h2>
-    <p>Повний розклад дзвінків закладу. У групи АТ-25пр заняття закінчуються після 4-ї пари.</p>
-    <div class="bell-list" id="bells"></div>
+    <div class="bells" id="bells"></div>
   </section>
-</main>
 
-<footer>
-  Викладачі
-  <ul id="teachers"></ul>
-</footer>
+  <section class="block">
+    <h2>Викладачі</h2>
+    <div class="teachers" id="teachers"></div>
+  </section>
+
+  <footer>Київський час · АТ-25пр</footer>
+</div>
 
 <script>
 const CR = "https://classroom.google.com/c/";
@@ -371,108 +364,113 @@ const WEEK = [
   {d:5, name:"П’ятниця", note:"", lessons:{1:[S.el], 2:[S.eng_gr, S.comp], 3:[S.auto]}}
 ];
 
+/* ---------- допоміжне ---------- */
 /* до якої дати повторювати пари у файлі для календаря (кінець семестру) */
 const SEMESTER_END = "2026-12-31";
+const HUE = {eng:262, auto:346, spr:158, eng_gr:198, comp:232, mech:292, pe:122, vzaem:322, vyh:212, el:176};
+const SHORT = {eng:'Англійська', auto:'Автомобілі', spr:'Нац. спротив', eng_gr:'Інж. графіка', comp:'Комп. графіка',
+  mech:'Техмех', pe:'Фізкультура', vzaem:'Взаємозамінність', vyh:'Виховна година', el:'Електротехніка'};
+Object.keys(S).forEach((k, i) => { const x = S[k]; x.k = k; x.h = HUE[k] ?? (i * 47) % 360; x.s = SHORT[k] || x.n; });
 
-const esc = v => String(v).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
-const uniq = arr => arr.filter((v, i) => arr.indexOf(v) === i);
+const esc = v => String(v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uniq = a => a.filter((v, i) => a.indexOf(v) === i);
+const hhmm = s => s.replace('.', ':');
+const pad2 = n => String(n).padStart(2, '0');
+const left = m => m >= 60 ? `${Math.floor(m / 60)} год ${m % 60} хв` : `${m} хв`;
+const lower = n => n.charAt(0).toLowerCase() + n.slice(1);
+const MONTHS = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+const WD = ['', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П’ятниця', 'Субота', 'Неділя'];
+const ABBR = ['', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+const DAY_ACC = ['', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п’ятницю', 'у суботу', 'у неділю'];
 
-/* кнопка Zoom і під нею ідентифікатор (на телефоні підказки при наведенні немає) */
-function zoomHtml(z){
-  const code = z.pw !== '—' ? ' · код ' + z.pw : '';
-  return '<span class="zoom-wrap"><a class="zoom" href="' + z.u + '" target="_blank" rel="noopener">Zoom</a>' +
-    '<button class="zid" type="button" data-copy="' + z.id.replace(/\s/g, '') + '" title="Скопіювати ідентифікатор">ID ' +
-    esc(z.id) + esc(code) + '</button></span>';
-}
+const svg = (d, s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const I = {
+  zoom:  svg('<rect x="2" y="6" width="13" height="12" rx="3"/><path d="m15 10 6-3v10l-6-3z"/>'),
+  cap:   svg('<path d="M22 9 12 4 2 9l10 5z"/><path d="M6 11.2V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.8"/>'),
+  sheet: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>'),
+  copy:  svg('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>', 16),
+  check: svg('<path d="m5 12 5 5L20 7"/>', 16),
+  cal:   svg('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M12 14v5m-2.5-2.5h5"/>', 20),
+  bell:  svg('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>', 20),
+  sun:   svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', 20),
+  moon:  svg('<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>', 20)
+};
+document.getElementById('icsBtn').innerHTML = I.cal;
+document.getElementById('notifBtn').innerHTML = I.bell;
 
-function linksHtml(x){
-  return '<a href="' + x.c + '" target="_blank" rel="noopener">Клас</a>' +
-    (x.j ? '<a href="' + x.j + '" target="_blank" rel="noopener">Журнал</a>' : '');
-}
+const lessonNums = day => Object.keys(day.lessons).map(Number).sort((a, b) => a - b);
+const zoomBtn = z => `<a class="btn zoom" href="${z.u}" target="_blank" rel="noopener">${I.zoom}Zoom</a>`;
+const codeOf = z => z.pw !== '—' ? ` · код ${esc(z.pw)}` : '';
+const zid = (z, cls = '') => `<button class="zid ${cls}" type="button" data-copy="${z.id.replace(/\s/g, '')}" title="Натисніть, щоб скопіювати ідентифікатор">ID ${esc(z.id)}${codeOf(z)} · скопіювати</button>`;
+const classBtn = x => `<a class="btn ghost" href="${x.c}" target="_blank" rel="noopener">${I.cap}Клас</a>`;
+const journalBtn = x => x.j ? `<a class="btn ghost" href="${x.j}" target="_blank" rel="noopener">${I.sheet}Журнал</a>` : '';
 
-function subjHtml(x, split){
-  return '<div class="subj">' + x.n + (split ? '<small>' + x.t + '</small>' : '') + '</div>';
-}
-
-function rowHtml(pairNo, list, dayNum){
-  const p = PAIRS[pairNo - 1];
-  const split = list.length > 1;
-  const first = list[0];
-  // дві дисципліни на одній парі: у кожної свої назва, викладач і кнопки Клас/Журнал
-  const body = split
-    ? '<div class="split">' + list.map(x =>
-        '<div class="part">' + subjHtml(x, true) + '<div class="links">' + linksHtml(x) + '</div></div>').join('') +
-      '<div class="subj"><small>у розкладі дві дисципліни на цій парі</small></div></div>'
-    : subjHtml(first, false);
+/* ---------- картка пари ---------- */
+function cardHtml(dayNum, no, list){
+  const p = PAIRS[no - 1], split = list.length > 1;
   const rooms = uniq(list.filter(x => x.z).map(x => x.z));
-  const links = rooms.map(zoomHtml).join('') + (split ? '' : linksHtml(first));
-  return '<div class="row" data-day="' + dayNum + '" data-pair="' + pairNo + '">' +
-      '<div class="num">' + pairNo + '</div>' +
-      '<div class="time">' + p.from + ' – ' + p.to + '</div>' +
-      body +
-      '<div class="teacher">' + uniq(list.map(x => x.t)).join(', ') + '</div>' +
-      '<div class="links">' + links + '</div>' +
-    '</div>';
+  const subs = list.map(x => `
+    <div class="sub">
+      <div class="sub-text"><h3>${x.n}</h3><p>${x.t}</p>${!split && x.z ? zid(x.z) : ''}</div>
+      <div class="acts">${!split && x.z ? zoomBtn(x.z) : ''}${classBtn(x)}${journalBtn(x)}</div>
+    </div>`).join('');
+  const shared = split && rooms.length
+    ? `<div class="shared">${rooms.map(z => zoomBtn(z) + zid(z)).join('')}</div>` : '';
+  return `<article class="lesson" data-day="${dayNum}" data-pair="${no}" data-state="" style="--h:${list[0].h}">
+    <div class="when"><b>${hhmm(p.from)}</b><span>${hhmm(p.to)}</span><i>${no} пара</i></div>
+    <div class="body">${subs}${split ? '<p class="split-note">У розкладі дві дисципліни на цій парі</p>' : ''}${shared}
+      <div class="prog"><i></i></div></div>
+    <span class="tag"></span>
+  </article>`;
 }
 
-document.getElementById('days').innerHTML = WEEK.map(day => {
-  const rows = Object.keys(day.lessons).map(Number).sort((a,b)=>a-b)
-    .map(no => rowHtml(no, day.lessons[no], day.d)).join('');
-  return '<section class="day" data-day="' + day.d + '">' +
-    '<div class="day-head"><h2>' + day.name + '</h2>' +
-    (day.note ? '<em>' + day.note + '</em>' : '') + '<span class="badge" hidden></span></div>' + rows + '</section>';
-}).join('');
+document.getElementById('days').innerHTML = WEEK.map(day => `
+  <section class="day" data-day="${day.d}" hidden>
+    <div class="day-head"><h2>${day.name}</h2><span class="dd"></span>${day.note ? `<em>${day.note}</em>` : ''}</div>
+    <div class="lessons">${lessonNums(day).map(no => cardHtml(day.d, no, day.lessons[no])).join('')}</div>
+  </section>`).join('');
 
-/* шапка, Zoom-кімнати та викладачі будуються з тих самих даних, що й розклад */
+document.getElementById('chips').innerHTML = WEEK.map(day =>
+  `<button class="chip" type="button" data-day="${day.d}" aria-pressed="false"><span>${ABBR[day.d]}</span><b></b></button>`).join('') +
+  '<button class="chip wide" type="button" data-day="all" aria-pressed="false">Тиждень</button>';
+
+/* ---------- Zoom-кімнати, дзвінки, викладачі (з тих самих даних) ---------- */
 (function(){
-  const used = uniq(WEEK.flatMap(d => Object.keys(d.lessons).map(Number)));
-  const first = Math.min(...used), last = Math.max(...used);
-  document.getElementById('metaDays').textContent = WEEK[0].name + ' — ' + WEEK[WEEK.length - 1].name.toLowerCase();
-  document.getElementById('metaPairs').textContent = 'з ' + first + '-ї по ' + last + '-' + (last === 3 ? 'тю' : 'ту');
-  document.getElementById('metaTime').textContent = PAIRS[first - 1].from + ' — ' + PAIRS[last - 1].to;
-
   const subjects = Object.values(S);
-  const lower = n => n.charAt(0).toLowerCase() + n.slice(1);
   document.getElementById('rooms').innerHTML = Object.values(Z).map(z => {
     const by = subjects.filter(x => x.z === z);
     if (!by.length) return '';
-    const names = by.map(x => x.n);
-    return '<div class="room">' +
-        '<div class="who">' + names[0] + names.slice(1).map(n => ', ' + lower(n)).join('') +
-        '<small>' + uniq(by.map(x => x.t)).join(', ') + '</small></div>' +
-        '<div class="code">' + z.id + (z.pw !== '—' ? ' · ' + z.pw : '') + '</div>' +
-        '<a href="' + z.u + '" target="_blank" rel="noopener">Відкрити</a>' +
-      '</div>';
+    return `<article class="room">
+      <div><h3>${by.map(x => x.n).join(', ')}</h3><p>${uniq(by.map(x => x.t)).join(', ')}</p></div>
+      <div class="kv"><span>ID</span><b>${esc(z.id)}</b><button class="copy" type="button" data-copy="${z.id.replace(/\s/g, '')}" aria-label="Скопіювати ідентифікатор">${I.copy}</button></div>
+      ${z.pw !== '—' ? `<div class="kv"><span>Код</span><b>${esc(z.pw)}</b><button class="copy" type="button" data-copy="${esc(z.pw)}" aria-label="Скопіювати код">${I.copy}</button></div>` : ''}
+      <a class="btn zoom" href="${z.u}" target="_blank" rel="noopener">${I.zoom}Відкрити кімнату</a>
+    </article>`;
   }).join('');
   const noZoom = subjects.filter(x => !x.z).map(x => lower(x.n));
   document.getElementById('roomsHint').textContent = noZoom.length
-    ? 'Без посилань на Zoom (заняття за Google Класом): ' + noZoom.join(', ') + '.' : '';
+    ? `Без посилань на Zoom (заняття за Google Класом): ${noZoom.join(', ')}.` : '';
+
+  const used = uniq(WEEK.flatMap(lessonNums));
+  const last = Math.max(...used);
+  document.getElementById('bells').innerHTML = PAIRS.map(p => `
+    <div class="bell${p.no > last ? ' off' : ''}"><span class="n">${p.no}</span><span class="t">${hhmm(p.from)} – ${hhmm(p.to)}</span>${p.no > last ? '<em>не у вашій групі</em>' : ''}</div>`).join('');
 
   const byTeacher = {};
   subjects.forEach(x => (byTeacher[x.t] = byTeacher[x.t] || []).push(lower(x.n)));
   document.getElementById('teachers').innerHTML = Object.keys(byTeacher).map(t =>
-    '<li>' + t + ' — ' + byTeacher[t].join(', ') + '</li>').join('');
+    `<article class="teacher-card"><h3>${t}</h3><p>${byTeacher[t].join(', ')}</p></article>`).join('');
 })();
 
-/* натискання на ID Zoom копіює його */
+/* натискання на ID / код копіює його */
 document.addEventListener('click', e => {
-  const b = e.target.closest('.zid');
+  const b = e.target.closest('[data-copy]');
   if (!b) return;
   const old = b.innerHTML;
-  const done = ok => { b.textContent = ok ? 'Скопійовано ✓' : b.dataset.copy; setTimeout(() => b.innerHTML = old, 1500); };
+  const done = ok => { b.innerHTML = ok ? (b.classList.contains('copy') ? I.check : 'Скопійовано ✓') : esc(b.dataset.copy); setTimeout(() => b.innerHTML = old, 1400); };
   if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(() => done(true), () => done(false));
   else done(false);
 });
-
-document.getElementById('bells').innerHTML = PAIRS.map((p, i) => {
-  const off = p.no > 4;
-  const gap = i < PAIRS.length - 1 ? PAIRS[i+1].s - p.e : 0;
-  return '<div class="bell' + (off ? ' off' : '') + '">' +
-      '<span class="p">' + p.no + ' пара</span><span class="t">' + p.from + ' – ' + p.to + '</span>' +
-      (off ? '<span class="tag">не у вашій групі</span>' : '') +
-    '</div>' +
-    (gap ? '<div class="bell break"><span class="p">Перерва</span><span class="t">' + gap + ' хвилин</span></div>' : '');
-}).join('');
 
 /* --- файл для календаря (.ics): щотижневі пари з нагадуванням за 10 хв --- */
 document.getElementById('icsBtn').addEventListener('click', () => {
@@ -528,30 +526,29 @@ document.getElementById('icsBtn').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 
+
 /* --- тема --- */
 const THEME_KEY = 'schedule-theme';
 const themeBtn = document.getElementById('themeBtn');
-
-function systemPrefersDark(){
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
+const systemPrefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
 function isDarkNow(){
   const explicit = document.documentElement.getAttribute('data-theme');
   return explicit ? explicit === 'dark' : systemPrefersDark();
 }
 function updateThemeBtn(){
   const dark = isDarkNow();
-  themeBtn.textContent = dark ? '☀️' : '🌙';
+  themeBtn.innerHTML = dark ? I.sun : I.moon;
   themeBtn.title = dark ? 'Світла тема' : 'Темна тема';
 }
 themeBtn.addEventListener('click', () => {
   const next = isDarkNow() ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem(THEME_KEY, next);
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
   updateThemeBtn();
 });
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-  if (!localStorage.getItem(THEME_KEY)) updateThemeBtn();
+  let saved = null; try{ saved = localStorage.getItem(THEME_KEY); }catch(e){}
+  if (!saved) updateThemeBtn();
 });
 updateThemeBtn();
 
@@ -633,10 +630,18 @@ function checkNotifications(dateKey, dayIdx, mins, day, nums){
   });
 }
 
-/* поточний стан за київським часом */
-const DAY_ACC = ['', 'у понеділок', 'у вівторок', 'у середу', 'у четвер', 'у п’ятницю', 'у суботу', 'у неділю'];
-function lessonNames(day, n){ return day.lessons[n].map(x => x.n).join(' / '); }
-function left(m){ return m >= 60 ? Math.floor(m / 60) + ' год ' + (m % 60) + ' хв' : m + ' хв'; }
+
+/* ---------- поточний стан (київський час) ---------- */
+function kyiv(){
+  const f = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Kyiv', weekday:'short', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false});
+  const p = {}; f.formatToParts(new Date()).forEach(x => p[x.type] = x.value);
+  return {
+    dayIdx: {Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6, Sun:7}[p.weekday],
+    y: +p.year, mo: +p.month, d: +p.day,
+    mins: (+p.hour % 24) * 60 + (+p.minute),
+    dateKey: p.year + '-' + p.month + '-' + p.day
+  };
+}
 
 /* найближча пара від поточного моменту: шукає далі по тижню */
 function nextLesson(dayIdx, now){
@@ -644,71 +649,124 @@ function nextLesson(dayIdx, now){
     const di = (dayIdx - 1 + k) % 7 + 1;
     const day = WEEK.find(d => d.d === di);
     if (!day) continue;
-    const n = Object.keys(day.lessons).map(Number).sort((a, b) => a - b).find(n => k > 0 || now < PAIRS[n-1].s);
+    const n = lessonNums(day).find(n => k > 0 || now < PAIRS[n-1].s);
     if (n) return {day, n, inDays: k};
   }
   return null;
 }
 
-/* на телефоні одразу показати сьогоднішній (або наступний) день, а не початок тижня */
-let scrolled = false;
-function scrollOnce(el){
-  if (scrolled || !el || location.hash || !window.matchMedia('(max-width:760px)').matches) return;
-  scrolled = true;
-  el.scrollIntoView({block: 'start'});
+/* ---------- головна картка ---------- */
+let lastHero = '';
+function renderHero(m, t){
+  const hero = document.getElementById('hero');
+  let html;
+  if (m.kind === 'none'){
+    html = '<h2>Розклад порожній</h2>';
+  } else {
+    const list = m.day.lessons[m.n], P = PAIRS[m.n - 1], split = list.length > 1;
+    const rooms = uniq(list.filter(x => x.z).map(x => x.z));
+    let label, count, live = false;
+    if (m.kind === 'now'){ label = 'Зараз'; live = true; count = `ще ${left(m.left)}`; }
+    else if (m.inDays === 0){ label = 'Наступна пара'; count = `через ${left(m.left)}`; }
+    else {
+      label = m.weekend ? 'Вихідний · далі' : 'На сьогодні все';
+      count = `${m.inDays === 1 ? 'завтра' : DAY_ACC[m.day.d]} о ${hhmm(P.from)}`;
+    }
+    hero.style.setProperty('--h', list[0].h);
+    const teachers = uniq(list.map(x => x.t)).map(esc).join(', ');
+    const acts = rooms.map(z => `<a class="btn big zoomw" href="${z.u}" target="_blank" rel="noopener">${I.zoom}Зайти в Zoom</a>`).join('')
+      + list.map(x => `<a class="btn ${split ? '' : 'big '}ghostw" href="${x.c}" target="_blank" rel="noopener">${I.cap}Клас${split ? ' · ' + esc(x.s) : ''}</a>`).join('')
+      + list.filter(x => x.j).map(x => `<a class="btn ${split ? '' : 'big '}ghostw" href="${x.j}" target="_blank" rel="noopener">${I.sheet}Журнал${split ? ' · ' + esc(x.s) : ''}</a>`).join('');
+    html = `
+      <div class="hero-top">
+        <span class="eyebrow${live ? ' live' : ''}"><i></i>${label}</span>
+        <span class="clock">${WD[t.dayIdx]}, ${t.d} ${MONTHS[t.mo - 1]} · ${pad2(Math.floor(t.mins / 60))}:${pad2(t.mins % 60)}</span>
+      </div>
+      <h2>${list.map(x => esc(split ? x.s : x.n)).join(' / ')}</h2>
+      <p class="meta">${m.n} пара · ${hhmm(P.from)} – ${hhmm(P.to)} · ${teachers}</p>
+      <div class="count">${count}</div>
+      ${m.kind === 'now' ? `<div class="hprog"><i style="width:${Math.max(2, Math.min(100, m.pct)).toFixed(0)}%"></i></div>` : ''}
+      <div class="hero-acts">${acts}</div>
+      ${rooms.map(z => zid(z)).join('')}
+      ${rooms.length ? '' : '<p class="nozoom">Для цієї пари немає Zoom — заняття в Google Класі.</p>'}`;
+  }
+  if (html !== lastHero){ hero.innerHTML = html; lastHero = html; }
+}
+
+/* ---------- вибір дня ---------- */
+let userSel = null;
+function autoSel(t){
+  if (WEEK.some(d => d.d === t.dayIdx)) return t.dayIdx;
+  return (WEEK.find(d => d.d > t.dayIdx) || WEEK[0]).d;
+}
+document.getElementById('chips').addEventListener('click', e => {
+  const c = e.target.closest('.chip');
+  if (!c) return;
+  userSel = c.dataset.day === 'all' ? 'all' : +c.dataset.day;
+  applySelection(kyiv());
+});
+function applySelection(t){
+  const sel = String(userSel ?? autoSel(t));
+  document.querySelectorAll('.chip').forEach(c => {
+    const on = c.dataset.day === sel;
+    c.classList.toggle('on', on);
+    c.setAttribute('aria-pressed', String(on));
+  });
+  document.querySelectorAll('.day').forEach(s => { s.hidden = !(sel === 'all' || s.dataset.day === sel); });
 }
 
 function tick(){
-  const f = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Kyiv', weekday:'short', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false});
-  const p = {}; f.formatToParts(new Date()).forEach(x => p[x.type] = x.value);
-  const dayIdx = {Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6,Sun:7}[p.weekday];
-  const dateKey = p.year + '-' + p.month + '-' + p.day;
-  const now = (+p.hour) * 60 + (+p.minute);
-  const out = document.getElementById('now-text');
+  const t = kyiv();
+  const day = WEEK.find(d => d.d === t.dayIdx);
+  const nums = day ? lessonNums(day) : [];
+  const cur = nums.find(n => t.mins >= PAIRS[n-1].s && t.mins < PAIRS[n-1].e);
+  if (day) checkNotifications(t.dateKey, t.dayIdx, t.mins, day, nums);
 
-  document.querySelectorAll('.today, .next').forEach(el => el.classList.remove('today', 'next'));
-  document.querySelectorAll('.row.now').forEach(el => el.classList.remove('now'));
-  document.querySelectorAll('.day-head .badge').forEach(b => b.hidden = true);
-  const mark = (di, cls, label) => {
-    const sec = document.querySelector('.day[data-day="' + di + '"]');
-    if (!sec) return null;
-    sec.classList.add(cls);
-    const b = sec.querySelector('.badge'); b.textContent = label; b.hidden = false;
-    return sec;
-  };
-
-  const day = WEEK.find(d => d.d === dayIdx);
-  let focus = null;
-  if (day){
-    focus = mark(dayIdx, 'today', 'сьогодні');
-    const nums = Object.keys(day.lessons).map(Number).sort((a,b)=>a-b);
-    checkNotifications(dateKey, dayIdx, now, day, nums);
-    const cur = nums.find(n => now >= PAIRS[n-1].s && now < PAIRS[n-1].e);
-    if (cur){
-      const row = document.querySelector('.row[data-day="' + dayIdx + '"][data-pair="' + cur + '"]');
-      if (row) row.classList.add('now');
-      out.innerHTML = 'Зараз <strong>' + lessonNames(day, cur) + '</strong>, до ' + PAIRS[cur-1].to +
-        ' <span class="count">(ще ' + left(PAIRS[cur-1].e - now) + ')</span>.';
-      scrollOnce(focus);
-      return;
-    }
-  }
-  const nx = nextLesson(dayIdx, now);
-  if (!nx){ out.textContent = 'Розклад порожній.'; return; }
-  if (nx.inDays === 0){
-    out.innerHTML = 'Наступна — <strong>' + lessonNames(nx.day, nx.n) + '</strong>, початок о ' + PAIRS[nx.n-1].from +
-      ' <span class="count">(через ' + left(PAIRS[nx.n-1].s - now) + ')</span>.';
+  let m;
+  if (cur){
+    const P = PAIRS[cur - 1];
+    m = {kind:'now', day, n:cur, left:P.e - t.mins, pct:(t.mins - P.s) / (P.e - P.s) * 100};
   } else {
-    const when = nx.inDays === 1 ? 'завтра' : DAY_ACC[nx.day.d];
-    out.innerHTML = (day ? 'На сьогодні пари закінчились. ' : 'Вихідний. ') +
-      'Наступна — ' + when + ' о <strong>' + PAIRS[nx.n-1].from + '</strong>, ' + lessonNames(nx.day, nx.n) + '.';
-    const sec = mark(nx.day.d, 'next', nx.inDays === 1 ? 'завтра' : 'далі');
-    if (!day) focus = sec;
+    const nx = nextLesson(t.dayIdx, t.mins);
+    m = nx ? {kind:'next', day:nx.day, n:nx.n, inDays:nx.inDays, left:PAIRS[nx.n-1].s - t.mins, weekend:!day}
+           : {kind:'none'};
   }
-  scrollOnce(focus);
+  renderHero(m, t);
+
+  // позначки пар: завершено / зараз / далі
+  const upcoming = nums.find(n => t.mins < PAIRS[n-1].s);
+  document.querySelectorAll('.lesson').forEach(el => {
+    const n = +el.dataset.pair;
+    let st = '';
+    if (+el.dataset.day === t.dayIdx){
+      const P = PAIRS[n - 1];
+      st = t.mins >= P.e ? 'past' : t.mins >= P.s ? 'now' : n === upcoming ? 'next' : '';
+      const bar = el.querySelector('.prog i');
+      if (bar) bar.style.width = st === 'now' ? ((t.mins - P.s) / (P.e - P.s) * 100).toFixed(0) + '%' : '0';
+    }
+    el.dataset.state = st;
+  });
+
+  // дати тижня у вибірі дня й заголовках
+  // у вихідні показуємо наступний тиждень (а не той, що минув)
+  const lastDay = WEEK[WEEK.length - 1].d;
+  const monday = Date.UTC(t.y, t.mo - 1, t.d) - (t.dayIdx - 1) * 864e5 + (t.dayIdx > lastDay ? 7 * 864e5 : 0);
+  document.querySelectorAll('.chip[data-day]').forEach(c => {
+    const di = +c.dataset.day;
+    if (!di) return;
+    const dt = new Date(monday + (di - 1) * 864e5);
+    c.querySelector('b').textContent = dt.getUTCDate();
+    c.classList.toggle('today', di === t.dayIdx);
+  });
+  document.querySelectorAll('.day').forEach(s => {
+    const dt = new Date(monday + (+s.dataset.day - 1) * 864e5);
+    s.querySelector('.dd').textContent = `${dt.getUTCDate()} ${MONTHS[dt.getUTCMonth()]}`;
+  });
+  applySelection(t);
 }
 tick();
 setInterval(tick, 30000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
 </script>
 </body>
 </html>
