@@ -21,24 +21,27 @@ try{
   --shadow:0 1px 2px rgba(15,23,42,.05), 0 10px 30px rgba(15,23,42,.07);
   --glow1:#e4e1ff; --glow2:#d6f1fa;
   --chip-l:94%; --chip-t:28%; --bar-l:50%;
+  --hero-s:40%; --hero-l1:31%; --hero-l2:22%; --hero-btn:#f2f4fb;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#090e1d; --surface:#121a2f; --surface-2:#0e1527; --text:#e8ecf7; --muted:#a3adc2; --faint:#8b96ad;
-    --line:#222c47; --accent:#8b93ff; --on-accent:#0a0f1e; --zoom:#2f7ff0; --live:#34d399;
+    --line:#222c47; --accent:#7f88f0; --on-accent:#0a0f1e; --zoom:#2c6ac8; --live:#34d399;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.35);
-    --glow1:#1c1b4a; --glow2:#0c2f3f;
+    --glow1:#15163a; --glow2:#0a2230;
     --chip-l:24%; --chip-t:84%; --bar-l:62%;
+    --hero-s:26%; --hero-l1:23%; --hero-l2:15%; --hero-btn:#d0d8ec;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#090e1d; --surface:#121a2f; --surface-2:#0e1527; --text:#e8ecf7; --muted:#a3adc2; --faint:#8b96ad;
-  --line:#222c47; --accent:#8b93ff; --on-accent:#0a0f1e; --zoom:#2f7ff0; --live:#34d399;
+  --line:#222c47; --accent:#7f88f0; --on-accent:#0a0f1e; --zoom:#2c6ac8; --live:#34d399;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.35);
-  --glow1:#1c1b4a; --glow2:#0c2f3f;
+  --glow1:#15163a; --glow2:#0a2230;
   --chip-l:24%; --chip-t:84%; --bar-l:62%;
+  --hero-s:26%; --hero-l1:23%; --hero-l2:15%; --hero-btn:#d0d8ec;
   color-scheme:dark;
 }
 :root[data-theme="light"]{color-scheme:light}
@@ -67,7 +70,7 @@ a{color:inherit}
 .logo{
   flex:none; width:46px; height:46px; border-radius:15px; display:grid; place-items:center;
   font-weight:800; letter-spacing:.02em; color:#fff;
-  background:linear-gradient(135deg,#6366f1,#06b6d4); box-shadow:0 8px 18px -4px rgba(79,70,229,.55);
+  background:linear-gradient(135deg,#5c60cf,#1a9db0); box-shadow:0 8px 18px -8px rgba(79,70,229,.45);
 }
 h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing:-.015em; white-space:nowrap}
 .brand p{margin:2px 0 0; font-size:.82rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -96,32 +99,32 @@ h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing
 /* ---------- головна картка «зараз» ---------- */
 .hero{
   --h:250; position:relative; overflow:hidden; border-radius:28px; color:#fff; padding:22px 22px 20px;
-  background:linear-gradient(135deg, hsl(var(--h) 62% 32%), hsl(calc(var(--h) + 24) 62% 21%));
-  box-shadow:0 22px 44px -14px hsl(var(--h) 70% 22% / .65);
+  background:linear-gradient(135deg, hsl(var(--h) var(--hero-s) var(--hero-l1)), hsl(calc(var(--h) + 24) var(--hero-s) var(--hero-l2)));
+  box-shadow:0 18px 40px -18px hsl(var(--h) 40% 10% / .6);
   transition:background .4s;
 }
 .hero::before, .hero::after{content:""; position:absolute; border-radius:50%; pointer-events:none}
-.hero::before{width:300px; height:300px; right:-90px; top:-120px; background:radial-gradient(circle, rgba(255,255,255,.2), transparent 68%)}
-.hero::after{width:220px; height:220px; left:-70px; bottom:-130px; background:radial-gradient(circle, rgba(255,255,255,.12), transparent 70%)}
+.hero::before{width:300px; height:300px; right:-90px; top:-120px; background:radial-gradient(circle, rgba(255,255,255,.08), transparent 68%)}
+.hero::after{width:220px; height:220px; left:-70px; bottom:-130px; background:radial-gradient(circle, rgba(255,255,255,.04), transparent 70%)}
 .hero > *{position:relative; z-index:1}
 .hero-top{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:14px}
 .eyebrow{
   display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:99px;
-  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.2);
   font-size:.74rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
 }
 .eyebrow i{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.7)}
-.eyebrow.live i{background:#4ade80; box-shadow:0 0 0 0 rgba(74,222,128,.7); animation:pulse 1.8s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)} 100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.eyebrow.live i{background:#6fd9a0; box-shadow:0 0 0 0 rgba(111,217,160,.6); animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(111,217,160,0)} 100%{box-shadow:0 0 0 0 rgba(111,217,160,0)}}
 .clock{font-size:.85rem; color:rgba(255,255,255,.82)}
 .hero h2{margin:0; font-size:clamp(1.45rem, 5vw, 2.15rem); line-height:1.15; font-weight:800; letter-spacing:-.02em}
 .hero .meta{margin:8px 0 0; color:rgba(255,255,255,.88); font-size:.98rem}
 .count{
   display:inline-block; margin-top:14px; padding:7px 14px; border-radius:12px;
-  background:rgba(255,255,255,.14); font-weight:700; font-size:1.02rem;
+  background:rgba(255,255,255,.10); font-weight:700; font-size:1.02rem;
 }
 .hprog{height:6px; border-radius:99px; background:rgba(255,255,255,.22); margin-top:14px; overflow:hidden}
-.hprog i{display:block; height:100%; border-radius:99px; background:#fff; transition:width .6s}
+.hprog i{display:block; height:100%; border-radius:99px; background:rgba(255,255,255,.78); transition:width .6s}
 .hero-acts{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
 .hero .zid{color:rgba(255,255,255,.85); margin-top:12px; display:block; font-size:.82rem}
 .hero .zid:hover{color:#fff}
@@ -138,11 +141,11 @@ h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing
 .btn.zoom:hover{filter:brightness(1.08)}
 .btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
 .btn.big{height:48px; padding:0 20px; border-radius:15px; font-size:.95rem}
-.btn.zoomw{background:#fff; border-color:#fff; color:#0f172a}
+.btn.zoomw{background:var(--hero-btn); border-color:var(--hero-btn); color:#0f172a}
 .btn.zoomw svg{color:#1b6fe0}
-.btn.zoomw:hover{background:#f1f5ff}
-.btn.ghostw{background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.34); color:#fff}
-.btn.ghostw:hover{background:rgba(255,255,255,.24)}
+.btn.zoomw:hover{filter:brightness(1.05)}
+.btn.ghostw{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.24); color:#fff}
+.btn.ghostw:hover{background:rgba(255,255,255,.16)}
 .zid{
   font:inherit; font-size:.76rem; line-height:1.3; color:var(--faint); background:none; border:0; padding:3px 0 0;
   cursor:pointer; text-align:left;
@@ -183,7 +186,7 @@ h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing
   padding:16px 16px 16px 20px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow);
   transition:opacity .2s, box-shadow .2s, border-color .2s;
 }
-.lesson::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:hsl(var(--h) 65% var(--bar-l))}
+.lesson::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:hsl(var(--h) 48% var(--bar-l))}
 .when b{display:block; font-size:1.25rem; font-weight:800; letter-spacing:-.01em; line-height:1.2}
 .when span{display:block; color:var(--muted); font-size:.85rem}
 .when i{
@@ -200,12 +203,12 @@ h1{margin:0; font-size:1.2rem; line-height:1.15; font-weight:800; letter-spacing
 .shared{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px}
 .split-note{margin:0; font-size:.78rem; color:var(--faint)}
 .prog{height:4px; border-radius:99px; background:var(--line); overflow:hidden; display:none}
-.prog i{display:block; height:100%; width:0; background:hsl(var(--h) 65% var(--bar-l)); transition:width .6s}
+.prog i{display:block; height:100%; width:0; background:hsl(var(--h) 48% var(--bar-l)); transition:width .6s}
 .tag{position:absolute; top:12px; right:14px; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase}
 .lesson[data-state="past"]{opacity:.55}
 .lesson[data-state="past"] .tag::after{content:"завершено"; color:var(--faint)}
 .lesson[data-state="next"] .tag::after{content:"далі"; color:var(--accent)}
-.lesson[data-state="now"]{border-color:hsl(var(--h) 65% var(--bar-l)); box-shadow:0 0 0 4px hsl(var(--h) 80% 60% / .2), var(--shadow)}
+.lesson[data-state="now"]{border-color:hsl(var(--h) 48% var(--bar-l)); box-shadow:0 0 0 4px hsl(var(--h) 45% 55% / .16), var(--shadow)}
 .lesson[data-state="now"] .tag::after{content:"● зараз"; color:var(--live)}
 .lesson[data-state="now"] .prog{display:block}
 
